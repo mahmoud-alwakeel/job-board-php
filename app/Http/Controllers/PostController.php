@@ -28,4 +28,7 @@ class PostController extends Controller
         ]);
         return redirect('/blog');
     }
+    function delete() {
+        Post::destroy(3);
+    }
 }
