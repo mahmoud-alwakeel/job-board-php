@@ -33,7 +33,9 @@ class TagController extends Controller
         //     'post1' => $post1->tags,
         //     'post2' => $post2->tags,
         // ]);
-        $tag = Tag::find(1);
+        $tag = Tag::find(2);
+
+        $tag->posts()->attach([1, 2]);
 
         return response()->json([
             'tag' => $tag->posts,
