@@ -20,6 +20,6 @@ class CommentController extends Controller
         //     'post_id' => 3
         // ]);
         Comment::factory(5)->create();
-        return redirect('/comments');
+        return response(['message' => 'Comment created successfully', 'createdCount' => 5], 201);
     }
 }

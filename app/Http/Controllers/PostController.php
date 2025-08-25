@@ -1,35 +1,69 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Post;
+ 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
-    //
-    function index() {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
         // Orm get all data
         $data = Post::cursorPaginate(10);
         return view('post.index', ['posts' => $data, 'pageTitle' => 'Blog']);
     }
 
-    function show($id) {
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('post.create', ['pageTitle' => 'Create new Post']);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // TODO: this will be completed in the forms section
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
         $post = Post::findOrFail($id);
         return view('post.show', ['post' => $post, 'pageTitle' => $post->title]);
     }
 
-    function create() {
-        // $posts = Post::create([
-        //     'title' => 'this is a unique Post',
-        //     'body' => 'unique Body ',
-        //     'author' => 'unique Author ',
-        //     'published' => true
-        // ]);
-        Post::factory(1000)->create(); 
-        return redirect('/blog');
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        return view('post.edit', ['pageTitle' => 'Edit Post']);
     }
-    function delete() {
-        Post::destroy(3);
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        // TODO: this will be completed in the forms section
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        // TODO: this will be completed in the forms section
     }
 }
