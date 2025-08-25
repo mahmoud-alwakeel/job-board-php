@@ -10,7 +10,7 @@ class PostController extends Controller
     //
     function index() {
         // Orm get all data
-        $data = Post::all();
+        $data = Post::cursorPaginate(10);
         return view('post.index', ['posts' => $data, 'pageTitle' => 'Blog']);
     }
 
@@ -20,12 +20,13 @@ class PostController extends Controller
     }
 
     function create() {
-        $posts = Post::create([
-            'title' => 'this is a unique Post',
-            'body' => 'unique Body ',
-            'author' => 'unique Author ',
-            'published' => true
-        ]);
+        // $posts = Post::create([
+        //     'title' => 'this is a unique Post',
+        //     'body' => 'unique Body ',
+        //     'author' => 'unique Author ',
+        //     'published' => true
+        // ]);
+        Post::factory(1000)->create(); 
         return redirect('/blog');
     }
     function delete() {
