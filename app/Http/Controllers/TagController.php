@@ -2,26 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
-    //
-    function index() {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
         // Orm get all data
         $data = Tag::all();
         return view('tag.index', ['tags' => $data, 'pageTitle' => 'Tags']);
     }
 
-    function create() {
-        $tags = Tag::create([
-            'title' => 'Frontend',
-        ]);
-        return redirect('/tags');
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('tag.create', ['pageTitle' => 'Create new Tag']);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $tag = Tag::findOrFail($id);
+        return view('tag.show', ['tag' => $tag, 'pageTitle' => $tag->name]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
     function testManyToMany() {
         // $post1 = Post::find(1);
         // $post2 = Post::find(2);
@@ -36,10 +79,6 @@ class TagController extends Controller
         $tag = Tag::find(2);
 
         $tag->posts()->attach([1, 2]);
-
-        return response()->json([
-            'tag' => $tag->posts,
-            'post' => $tag->posts,
-        ]);
+        return view('tag.testManyToMany', ['pageTitle' => 'Test Many to Many']);
     }
 }

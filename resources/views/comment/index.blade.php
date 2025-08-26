@@ -5,4 +5,5 @@
         <p>{{ $comment->author }}</p>
         <p><a href="/blog/{{ $comment->post->id }}">{{ $comment->post->title }}</a></p>
     @endforeach
+    {{ $comments->links() }}
 </x-layout>
