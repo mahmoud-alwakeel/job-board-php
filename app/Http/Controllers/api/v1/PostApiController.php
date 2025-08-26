@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class PostApiController extends Controller
     public function index()
     {
         $data = Post::paginate(20);
-        return response($data, 200);
+        return response(['data' => $data, 'success' => true, 'message' => 'Posts fetched successfully'], 200);
     }
 
     /**
@@ -23,7 +23,7 @@ class PostApiController extends Controller
     public function store(Request $request)
     {
         $data = Post::create($request->all());
-        return response($data, 201);
+        return response(['data' => $data, 'success' => true, 'message' => 'Post created successfully'], 201);
     }
 
     /**

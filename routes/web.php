@@ -13,7 +13,7 @@ Route::get('/', IndexController::class);
 Route::get('/about', AboutController::class);
 Route::get('/contact', ContactController::class);
 
-Route::get('/job', JobController::class);
+Route::get('/job', [JobController::class, 'index']);
 
 Route::resource('blog', PostController::class );
 
