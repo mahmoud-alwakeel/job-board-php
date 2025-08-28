@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Http\Requests\BlogPostRequest;
 
 class PostController extends Controller
 {
@@ -13,7 +14,7 @@ class PostController extends Controller
     public function index()
     {
         // Orm get all data
-        $data = Post::cursorPaginate(10);
+        $data = Post::latest()->cursorPaginate(10);
         return view('post.index', ['posts' => $data, 'pageTitle' => 'Blog']);
     }
 
@@ -28,19 +29,16 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'content' => 'required',
-        ], [
-            'title.required' => 'Field is required',
-            'author.required' => 'Field is required',
-            'content.required' => 'Field is required',
-        ]);
-        
-        print_r($validated);
+    public function store(BlogPostRequest $request)
+    {   
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->author = $request->input('author');
+        $post->body = $request->input('content');
+        $post->published = $request->has('published');
+
+        $post->save();
+        return redirect('/blog')->with('success', 'Post created successfully');
         // TODO: this will be completed in the forms section
     }
 
