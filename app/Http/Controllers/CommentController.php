@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Http\Requests\CommentRequest;
+use App\Models\Post;
 
 class CommentController extends Controller
 {
@@ -13,8 +15,9 @@ class CommentController extends Controller
     public function index()
     {
         // Orm get all data
-        $data = Comment::cursorPaginate(10);
-        return view('comment.index', ['comments' => $data, 'pageTitle' => 'Comments']);
+        // $data = Comment::cursorPaginate(10);
+        // return view('comment.index', ['comments' => $data, 'pageTitle' => 'Comments']);
+        return redirect('/blog');
     }
 
     /**
@@ -22,15 +25,25 @@ class CommentController extends Controller
      */
     public function create()
     {
-        return view('comment.create', ['pageTitle' => 'Create new Comment']);
+        // return view('comment.create', ['pageTitle' => 'Create new Comment']);
+        return redirect('/blog');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
-        //
+        $post = Post::findOrFail($request->input('post_id'));
+
+        $comment = new Comment();
+        $comment->author = $request->input('author');
+        $comment->content = $request->input('content');
+        $comment->post_id = $request->input('post_id');
+
+        $comment->save();
+        
+        return redirect("/blog/{$post->id}")->with('success', 'Comment created successfully');
     }
 
     /**
@@ -38,8 +51,9 @@ class CommentController extends Controller
      */
     public function show(string $id)
     {
-        $comment = Comment::findOrFail($id);
-        return view('comment.show', ['comment' => $comment, 'pageTitle' => 'Comment Details']);
+        // $comment = Comment::findOrFail($id);
+        // return view('comment.show', ['comment' => $comment, 'pageTitle' => 'Comment Details']);
+        return redirect('/blog');
     }
 
     /**
@@ -47,8 +61,7 @@ class CommentController extends Controller
      */
     public function edit(string $id)
     {
-        $comment = Comment::findOrFail($id);
-        return view('comment.edit', ['comment' => $comment, 'pageTitle' => 'Edit Comment']);
+        //
     }
 
     /**

@@ -10,7 +10,7 @@
     @foreach ($posts as $post)
         <div class="flex justify-between items-center border border-gray-200 px-4 py-6 my-4">
         <div>
-            <h2 class= "text-2xl">{{ $post->title }}</h2>
+            <h2 class= "text-2xl"><a href="/blog/{{ $post->id }}">{{ $post->title }}</a></h2>
             <h1 class="text-lg">{{ $post->author }}</h1>
         </div>
         <div>
