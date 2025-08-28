@@ -15,7 +15,11 @@
         </div>
         <div>
             <a href="/blog/{{ $post->id }}/edit" class="text-blue-500">Edit</a>
-            <button type="button" class="text-red-500">Delete</button>
+            <form method="POST" action="/blog/{{ $post->id }}" onclick="return confirm('Are you sure you want to delete this post?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-500">Delete</button>
+            </form>
         </div>
         </div>
         

@@ -82,6 +82,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        // TODO: this will be completed in the forms section
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect('/blog')->with('success', 'Post deleted successfully');
     }
 }
