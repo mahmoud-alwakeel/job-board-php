@@ -1,31 +1,50 @@
 <x-layout :title="$pageTitle">
-    <form method="POST" action="{{ route('blog.store') }}">
+    <form method="POST" action="/blog">
         @csrf
         <div class="space-y-12">
             <div class="border-b border-gray-300 pb-12">
                 <h2 class="text-base/7 font-semibold text-gray-900">Create new Post</h2>
                 <p class="mt-1 text-sm/6 text-gray-600">Use this form to create a new post</p>
 
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li class="text-red-500">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div class="sm:col-span-3">
                         <label for="title" class="block text-sm/6 font-medium text-gray-700">Title</label>
                         <div class="mt-2">
-                            <input id="title" type="text" name="title" placeholder="Enter post title" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm/6" />
+                            <input id="title" type="text" value="{{ old('title') }}" name="title" placeholder="Enter post title" class="{{ $errors->has('title') ? 'border-red-500' : '' }} block w-full rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm/6" />
                         </div>
+                        @error('title')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="sm:col-span-3">
                         <label for="author" class="block text-sm/6 font-medium text-gray-700">Author</label>
                         <div class="mt-2">
-                            <input id="author" type="text" name="author" placeholder="Enter author name" class="block w-full rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm/6" />
+                            <input id="author" type="text" value="{{ old('author') }}" name="author" placeholder="Enter author name" class="{{ $errors->has('author') ? 'border-red-500' : '' }} block w-full rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm/6" />
                         </div>
+                        @error('author')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="col-span-full">
                         <label for="content" class="block text-sm/6 font-medium text-gray-700">Content</label>
                         <div class="mt-2">
-                            <textarea id="content" name="content" rows="6" placeholder="Write your post content here..." class="block w-full rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm/6"></textarea>
+                            <textarea id="content" name="content" rows="6" placeholder="Write your post content here..." class="{{ $errors->has('content') ? 'border-red-500' : '' }} block w-full rounded-md border border-gray-300 px-3 py-2 text-base text-gray-900 placeholder:text-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm/6">{{ old('content') }}</textarea>
                         </div>
+                        @error('content')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="col-span-full">
